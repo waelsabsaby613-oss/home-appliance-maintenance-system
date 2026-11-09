@@ -101,3 +101,39 @@ namespace HomeApplianceMaintenance
         public List<Appliance> GetAppliances() => _appliances;
     }
 }
+using System.Text.RegularExpressions;
+
+namespace HomeApplianceMaintenance
+{
+    // 4. Delegates & Events: التفويض والأحداث
+    public delegate void StatusChangedHandler(string serialNumber, string newStatus);
+
+    public class MaintenanceNotifier
+    {
+        // Event إطلاق حدث عند تغير حالة الصيانة
+        public event StatusChangedHandler OnStatusChanged;
+
+        public void NotifyStatusChange(string serialNumber, string newStatus)
+        {
+            // إطلاق الحدث عند تحقق الشرط
+            OnStatusChanged?.Invoke(serialNumber, newStatus);
+        }
+    }
+
+    // 5. Static Classes & Members: الفئات والأعضاء الثابتة
+    public static class ValidationHelper
+    {
+        // دالة استاتيكية للتحقق من صحة الرقم التسلسلي (مثلاً يجب أن يبدأ بـ SN وحروف/أرقام)
+        public static bool IsValidSerialNumber(string serialNumber)
+        {
+            if (string.IsNullOrWhiteSpace(serialNumber)) return false;
+            return Regex.IsMatch(serialNumber, @"^SN-[0-9]{4}$");
+        }
+    }
+
+    public static class MaintenanceStatistics
+    {
+        // خاصية استاتيكية لحساب عدد الأجهزة المسجلة
+        public static int TotalRegisteredDevices { get; set; } = 0;
+    }
+}
