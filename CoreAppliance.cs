@@ -59,7 +59,4 @@ namespace HomeApplianceMaintenance
 
         public virtual string GetMaintenanceStatus()
         {
-            return _isRepaired ? "تم الإصلاح (Completed)" : "قيد الصيانة (Under Maintenance)";
-        }
-    }
-}
+            return _isRepaired ? "تم الإصلاح (Completed)" : "قيد الصيانة (Under 
