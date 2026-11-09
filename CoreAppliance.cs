@@ -59,4 +59,45 @@ namespace HomeApplianceMaintenance
 
         public virtual string GetMaintenanceStatus()
         {
-            return _isRepaired ? "تم الإصلاح (Completed)" : "قيد الصيانة (Under 
+            return _isRepaired ? "تم الإصلاح (Completed)" : "قيد الصيانة (Under using System;
+using System.Collections.Generic;
+
+namespace HomeApplianceMaintenance
+{
+    // 2. Polymorphism & Management: إدارة الأجهزة ومعالجتها عبر List
+    public class MaintenanceManager
+    {
+        private readonly List<Appliance> _appliances = new List<Appliance>();
+
+        public void AddAppliance(Appliance appliance)
+        {
+            if (appliance != null)
+            {
+                _appliances.Add(appliance);
+            }
+        }
+
+        // استخدام Polymorphism لحساب التكاليف الإجمالية لجميع الأجهزة
+        public double CalculateTotalCenterRevenue()
+        {
+            double total = 0;
+            foreach (var app in _appliances)
+            {
+                total += app.CalculateTotalRepairCost(); // Polymorphic Call
+            }
+            return total;
+        }
+
+        // عرض حالات الأجهزة بالكامل
+        public void DisplayAllAppliancesReport()
+        {
+            Console.WriteLine("\n==== تقرير مركز الصيانة الشامل ====");
+            foreach (var app in _appliances)
+            {
+                Console.WriteLine($"[النوع: {app.GetType().Name}] | الرقم التسلسلي: {app.SerialNumber} | الماركة: {app.Brand} | الحالة: {app.GetMaintenanceStatus()} | التكلفة: {app.CalculateTotalRepairCost()}$");
+            }
+        }
+
+        public List<Appliance> GetAppliances() => _appliances;
+    }
+}
